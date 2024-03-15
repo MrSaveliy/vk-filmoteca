@@ -3,7 +3,7 @@ APP_NAME=vk-filmoteca
 DB_CONNECTION_STRING=user=postgres password=postgres dbname=postgres sslmode=disable
 
 migrate-up:
-    goose postgres "user=postgres password=postgres dbname=postgres sslmode=disable" up
+    goose postgres "$(DB_CONNECTION_STRING)" up
 
 migrate-down:
     goose postgres "$(DB_CONNECTION_STRING)" down
