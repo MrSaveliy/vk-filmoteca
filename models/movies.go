@@ -1,11 +1,9 @@
 package models
 
-import "time"
-
-type Movies struct {
-	Id          int       `json:"-" db:"id"`
-	Name        string    `json:"name" binding:"required"`
-	Discription string    `json:"discription" binding:"required"`
-	ReleaseDate time.Time `json:"release_date" binding:"required"`
-	Rating      int       `json:"rating" binding:"required"`
+type Movie struct {
+	Id          int     `json:"-" db:"id"`
+	Name        string  `json:"name" binding:"required" db:"name"`
+	Description string  `json:"description" binding:"required" db:"description"`
+	ReleaseDate string  `json:"release_date" binding:"required" db:"release_date"`
+	Rating      float64 `json:"rating" binding:"required" db:"rating"`
 }

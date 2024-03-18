@@ -8,14 +8,34 @@ import (
 type Authorization interface {
 	CreateUser(user models.User) (int, error)
 	CreateRole(role models.Role) (int, error)
+	ParseToken(token string) (int, error)
+	GenerateToken(email, password string) (string, error)
+}
+
+type Movies interface {
+	CreateMovie(movie models.Movie) (int, error)
+	GetMovieById(id int) (models.Movie, error)
+	// UpdateMovie(movie models.Movie) (int, error)
+	// DeleteMoviesById(id int) (int, error)
+}
+
+type Actors interface {
+	CreateActor(actor models.Actor) (int, error)
+	GetActorById(id int) (models.Actor, error)
+	// UpdateActort(actor models.Actor) (int, error)
+	// DeleteActortsById(id int) (int, error)
 }
 
 type Service struct {
 	Authorization
+	Movies
+	Actors
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		Movies:        NewMoviesService(repos.Movies),
+		Actors:        NewActorsService(repos.Actors),
 	}
 }

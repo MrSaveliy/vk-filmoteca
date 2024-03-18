@@ -20,17 +20,17 @@ CREATE TABLE IF NOT EXISTS movies
 (
     id          SERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
-    discription TEXT NOT NULL,
-    release_date DATE NOT NULL,
+    description TEXT NOT NULL,
+    release_date VARCHAR(20) NOT NULL,
     rating DECIMAL(3,1) CHECK (rating >= 0 AND rating <= 10) 
 );
 
-CREATE TABLE IF NOT EXISTS movies_actors
+CREATE TABLE IF NOT EXISTS actors
 (
     id          SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    gender VARCHAR(15) NOT NULL,
-    date_birth VARCHAR(255) NOT NULL,
+    gender VARCHAR(6) NOT NULL,
+    date_birth VARCHAR(20) NOT NULL,
     movie_id INT NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies(id)
 );  

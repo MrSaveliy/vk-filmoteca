@@ -1,6 +1,6 @@
 package models
 
-type Actors struct {
+type Actor struct {
 	Id         int    `json:"-" db:"id"`
 	Name       string `json:"name" binding:"required"`
 	Gender     string `json:"gender" binding:"required"`

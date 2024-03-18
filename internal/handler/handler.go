@@ -19,8 +19,14 @@ func (h *Handler) InitRoutes() *http.ServeMux {
 
 	mux.HandleFunc("/auth/sign-up", h.signUpHandler)
 	mux.HandleFunc("/auth/sign-in", h.signInHandler)
-	mux.HandleFunc("/auth/hello", h.getHello)
+
 	mux.HandleFunc("/role/create", h.createRole)
+
+	mux.HandleFunc("/movies/create", h.createMovie)
+	mux.HandleFunc("/movies/", h.getMovie)
+
+	mux.HandleFunc("/actors/create", h.createActor)
+	mux.HandleFunc("/actors/", h.getActor)
 
 	return mux
 }
