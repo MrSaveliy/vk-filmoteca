@@ -7,13 +7,34 @@ import (
 	"github.com/MrSaveliy/vk-filmoteca/internal/repository"
 	"github.com/MrSaveliy/vk-filmoteca/internal/service"
 	filmoteca "github.com/MrSaveliy/vk-filmoteca/server"
+	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
 
+// @title vk-filmoteca
+// @version 1.0
+// @description API Server for Movies Application
+
+// @host localhost:8000
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
+
 func main() {
+
+	r := chi.NewRouter()
+
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition
+	))
+
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("error initializing config: %s", err.Error())
 	}

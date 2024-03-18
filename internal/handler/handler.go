@@ -28,5 +28,9 @@ func (h *Handler) InitRoutes() *http.ServeMux {
 	mux.HandleFunc("/actors/create", h.createActor)
 	mux.HandleFunc("/actors/", h.getActor)
 
+	mux.HandleFunc("/swagger/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./docs/swagger/index.html")
+	})
+
 	return mux
 }

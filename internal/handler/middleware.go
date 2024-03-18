@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func (h *Handler) UserIdentity(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) userIdentity(w http.ResponseWriter, r *http.Request) {
 	authHeader := r.Header.Get("Authorization")
 
 	if authHeader == "" {
