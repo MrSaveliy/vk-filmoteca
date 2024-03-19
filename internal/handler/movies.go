@@ -3,7 +3,6 @@ package handler
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -59,20 +58,19 @@ func (h *Handler) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	pathParts := strings.Split(r.URL.Path, "/")
 	if len(pathParts) < 3 {
-		http.Error(w, "Invalid URL", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, "Invalid URL")
 		return
 	}
 
 	movieIdStr := pathParts[len(pathParts)-1]
 	movieId, err := strconv.Atoi(movieIdStr)
 	if err != nil {
-		http.Error(w, "Invalid movie ID"+err.Error(), http.StatusBadRequest)
-		log.Fatalf("Invalid movie ID %s", err.Error())
+		newErrorResponse(w, http.StatusInternalServerError, "Invalid movie ID"+err.Error())
 		return
 	}
 	movie, err := h.services.Movies.GetMovieById(movieId)
 	if err != nil {
-		http.Error(w, "Error retrieving movie: "+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusInternalServerError, "Error retrieving movie: "+err.Error())
 		return
 	}
 
@@ -85,7 +83,7 @@ func (h *Handler) getMovie(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error"+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusInternalServerError, "Internal Server Error"+err.Error())
 		return
 	}
 

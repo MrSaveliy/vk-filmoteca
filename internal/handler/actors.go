@@ -18,19 +18,19 @@ func (h *Handler) createActor(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Bad Request"+err.Error(), http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	var input models.Actor
 	if err := json.Unmarshal(body, &input); err != nil {
-		http.Error(w, "Bad Request"+err.Error(), http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := h.services.Actors.CreateActor(input)
 	if err != nil {
-		http.Error(w, "Internal Server Error"+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -40,7 +40,7 @@ func (h *Handler) createActor(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error"+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -58,20 +58,20 @@ func (h *Handler) getActor(w http.ResponseWriter, r *http.Request) {
 
 	pathParts := strings.Split(r.URL.Path, "/")
 	if len(pathParts) < 3 {
-		http.Error(w, "Invalid URL", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, "Invalid URL")
 		return
 	}
 
 	actorIdStr := pathParts[len(pathParts)-1]
 	actorId, err := strconv.Atoi(actorIdStr)
 	if err != nil {
-		http.Error(w, "Invalid actor ID"+err.Error(), http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, "Invalid actor ID"+err.Error())
 		return
 	}
 
 	actor, err := h.services.Actors.GetActorById(actorId)
 	if err != nil {
-		http.Error(w, "Internal Server Error"+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusInternalServerError, "Internal Server Error"+err.Error())
 		return
 	}
 
@@ -84,7 +84,7 @@ func (h *Handler) getActor(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error"+err.Error(), http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusInternalServerError, "Internal Server Error"+err.Error())
 		return
 	}
 

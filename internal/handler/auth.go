@@ -29,19 +29,19 @@ func (h *Handler) signUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	var input models.User
 	if err := json.Unmarshal(body, &input); err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := h.services.Authorization.CreateUser(input)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -51,7 +51,7 @@ func (h *Handler) signUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -86,19 +86,19 @@ func (h *Handler) signInHandler(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	var input signInInput
 	if err := json.Unmarshal(body, &input); err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	token, err := h.services.Authorization.GenerateToken(input.Email, input.Password)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusUnauthorized, err.Error())
 		return
 	}
 
@@ -108,7 +108,7 @@ func (h *Handler) signInHandler(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -125,19 +125,19 @@ func (h *Handler) createRole(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	var input models.Role
 	if err := json.Unmarshal(body, &input); err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := h.services.Authorization.CreateRole(input)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -147,7 +147,7 @@ func (h *Handler) createRole(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
