@@ -30,7 +30,7 @@ func (h *Handler) createMovie(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.services.Movies.CreateMovie(input)
 	if err != nil {
-		newErrorResponse(w, http.StatusBadRequest, "Internal Server Error")
+		newErrorResponse(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
 
@@ -40,7 +40,7 @@ func (h *Handler) createMovie(w http.ResponseWriter, r *http.Request) {
 
 	jsonResponse, err := json.Marshal(response)
 	if err != nil {
-		newErrorResponse(w, http.StatusBadRequest, "Internal Server Error")
+		newErrorResponse(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
 

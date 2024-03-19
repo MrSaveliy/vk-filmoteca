@@ -41,7 +41,7 @@ func (h *Handler) signUpHandler(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.services.Authorization.CreateUser(input)
 	if err != nil {
-		newErrorResponse(w, http.StatusBadRequest, err.Error())
+		newErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -98,7 +98,7 @@ func (h *Handler) signInHandler(w http.ResponseWriter, r *http.Request) {
 
 	token, err := h.services.Authorization.GenerateToken(input.Email, input.Password)
 	if err != nil {
-		newErrorResponse(w, http.StatusUnauthorized, err.Error())
+		newErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -137,7 +137,7 @@ func (h *Handler) createRole(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.services.Authorization.CreateRole(input)
 	if err != nil {
-		newErrorResponse(w, http.StatusBadRequest, err.Error())
+		newErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 

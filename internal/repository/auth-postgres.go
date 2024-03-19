@@ -27,8 +27,8 @@ func (r *AuthPostgres) CreateRole(role models.Role) (int, error) {
 
 func (r *AuthPostgres) CreateUser(user models.User) (int, error) {
 	var id int
-	query := fmt.Sprintf("INSERT INTO %s (email, password_hash) values ($1, $2) RETURNING id", usersTable)
-	row := r.db.QueryRow(query, user.Email, user.Password)
+	query := fmt.Sprintf("INSERT INTO %s (email, password_hash, role_name, role_id ) values ($1, $2, $3, $4) RETURNING id", usersTable)
+	row := r.db.QueryRow(query, user.Email, user.Password, user.Role, user.RoleId)
 	if err := row.Scan(&id); err != nil {
 		return 0, err
 	}

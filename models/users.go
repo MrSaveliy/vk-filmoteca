@@ -2,10 +2,10 @@ package models
 
 type User struct {
 	Id       int    `json:"-" db:"id"`
-	Email    string `json:"email" binding:"required"`
-	Password string `json:"password" binding:"required"`
-	Role     string `json:"role" binding:"required"`
-	RoleId   int    `json:"role_id" binding:"required"`
+	Email    string `json:"email" binding:"required" db:"email"`
+	Password string `json:"password" binding:"required" db:"password"`
+	Role     string `json:"role" binding:"required" db:"role"`
+	RoleId   int    `json:"role_id" binding:"required" db:"role_id"`
 }
 
 type Role struct {

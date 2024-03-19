@@ -30,7 +30,7 @@ func (h *Handler) createActor(w http.ResponseWriter, r *http.Request) {
 
 	id, err := h.services.Actors.CreateActor(input)
 	if err != nil {
-		newErrorResponse(w, http.StatusBadRequest, err.Error())
+		newErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
