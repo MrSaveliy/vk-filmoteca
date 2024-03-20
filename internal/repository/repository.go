@@ -14,15 +14,15 @@ type Authorization interface {
 type Movies interface {
 	CreateMovie(movie models.Movie) (int, error)
 	GetMovieById(id int) (models.Movie, error)
-	// UpdateMovie(movie models.Movie) (int, error)
-	// DeleteMoviesById(id int) (int, error)
+	UpdateMovieById(id int, new_movie models.Movie) (int, error)
+	DeleteMovieById(id int) (int, error)
 }
 
 type Actors interface {
 	CreateActor(actor models.Actor) (int, error)
 	GetActorById(id int) (models.Actor, error)
-	// UpdateActor(actor models.Actor) (int, error)
-	// DeleteActorsById(id int) (int, error)
+	UpdateActorById(id int, new_actor models.Actor) (int, error)
+	DeleteActorById(id int) (int, error)
 }
 
 type Repository struct {

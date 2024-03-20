@@ -20,3 +20,11 @@ func (s *ActorsService) CreateActor(actor models.Actor) (int, error) {
 func (s *ActorsService) GetActorById(id int) (models.Actor, error) {
 	return s.repo.GetActorById(id)
 }
+
+func (s *ActorsService) UpdateActorById(id int, new_actor models.Actor) (int, error) {
+	return s.repo.UpdateActorById(id, new_actor)
+}
+
+func (s *ActorsService) DeleteActorById(id int) (int, error) {
+	return s.repo.DeleteActorById(id)
+}

@@ -31,3 +31,22 @@ func (r *ActorsPostgres) GetActorById(id int) (models.Actor, error) {
 	err := r.db.Get(&actor, query, id)
 	return actor, err
 }
+
+func (r *ActorsPostgres) UpdateActorById(id int, new_actor models.Actor) (int, error) {
+	query := fmt.Sprintf("UPDATE %s SET name=$2, gender=$3, date_birth=$4, movie_id=$5 WHERE id=$1 RETURNING id", actorsTable)
+	row := r.db.QueryRow(query, id, new_actor.Name, new_actor.Gender, new_actor.Date_birth, new_actor.Movie_id)
+	if err := row.Scan(&id); err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
+func (r *ActorsPostgres) DeleteActorById(id int) (int, error) {
+	var deletedID int
+	query := fmt.Sprintf("DELETE FROM %s WHERE id=$1 RETURNING id", actorsTable)
+	err := r.db.QueryRow(query, id).Scan(&deletedID)
+	if err != nil {
+		return 0, err
+	}
+	return deletedID, nil
+}

@@ -22,11 +22,15 @@ func (h *Handler) InitRoutes() *http.ServeMux {
 
 	mux.HandleFunc("/role/create", h.createRole)
 
-	mux.HandleFunc("/movies/create", h.createMovie)
-	mux.HandleFunc("/movies/", h.getMovie)
+	mux.HandleFunc("/movie/create", h.createMovie)
+	mux.HandleFunc("/movie/", h.getMovieById)
+	mux.HandleFunc("/movie/update/", h.updateMovieById)
+	mux.HandleFunc("/movie/delete/", h.deleteMovieById)
 
-	mux.HandleFunc("/actors/create", h.createActor)
-	mux.HandleFunc("/actors/", h.getActor)
+	mux.HandleFunc("/actor/create", h.createActor)
+	mux.HandleFunc("/actor/", h.getActorById)
+	mux.HandleFunc("/actor/update/", h.updateActorById)
+	mux.HandleFunc("/actor/delete/", h.deleteActorById)
 
 	mux.HandleFunc("/swagger/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./docs/swagger/index.html")

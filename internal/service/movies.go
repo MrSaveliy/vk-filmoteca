@@ -20,3 +20,11 @@ func (s *MoviesService) CreateMovie(movie models.Movie) (int, error) {
 func (s *MoviesService) GetMovieById(id int) (models.Movie, error) {
 	return s.repo.GetMovieById(id)
 }
+
+func (s *MoviesService) UpdateMovieById(id int, new_movie models.Movie) (int, error) {
+	return s.repo.UpdateMovieById(id, new_movie)
+}
+
+func (s *MoviesService) DeleteMoviesById(id int) (int, error) {
+	return s.repo.DeleteMovieById(id)
+}
